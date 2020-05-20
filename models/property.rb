@@ -102,13 +102,13 @@ class Property
           end
 
           def find_by_id()
-                  db = PG.connect({dbname: 'property_tracker', host: 'localhost'})
-                  sql = "SELECT * FROM property_tracker WHERE id = $1"
-                  values = [@id]
-                  db.prepare("delete_one", sql)
-                  db.exec_prepared("delete_one", values)
-                  db.close()
-                end
+            db = PG.connect({dbname: 'property_tracker', host: 'localhost'})
+            sql = "SELECT * FROM property_tracker WHERE id = $1"
+            values = [@id]
+            db.prepare("delete_one", sql)
+            db.exec_prepared("delete_one", values)
+            db.close()
+          end
 
           def Property.find_by_id(passed_id)
             # get db object
@@ -159,6 +159,9 @@ class Property
 
             # APPROACH 2
             properties = property_db_result.map{|property_hash| Property.new(property_hash)}
+            if properties.first == nil
+              return "Sorry, we couldn't find #{address} in the database."
+            end
             return properties
           end
 

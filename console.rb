@@ -27,9 +27,11 @@ property1 = Property.new({
     binding.pry
     property1.save()
 
-p   Property.find_by_id(1)
+p   Property.find_by_id(13) #This does work but id value is changing each time the console.rb is run
 
 p Property.find_by_address('2 Lockkeepers Cottages')
+p Property.find_by_address('35 Fake Address')
+
 
     binding.pry
     nil
