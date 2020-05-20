@@ -110,20 +110,21 @@ class Property
                   db.close()
                 end
 
-          # def Property.find_by_id(passed_id)
-          #   # get db object
-          #   db = PG.connect({dbname: 'property_tracker', host: 'localhost'})
-          #   # Write SQL statement
-          #   sql = "SELECT * FROM property_tracker WHERE id = $#{passed_id}"
-          #   # prepare + execute SQL
-          #   db.prepare("all", sql)
-          #
-          #   # this is like an array of hashes
-          #   property_db_result = db.exec_prepared("all")
-          #   # close DB connection
-          #   db.close()
+          def Property.find_by_id(passed_id)
+            # get db object
+            db = PG.connect({dbname: 'property_tracker', host: 'localhost'})
+            # Write SQL statement
+            sql = "SELECT * FROM property_tracker WHERE id = $1"
+            value = [passed_id]
+            # prepare + execute SQL
+            db.prepare("find", sql)
 
+            # this is like an array of hashes
+            property_db_result = db.exec_prepared("find", value)
+            # close DB connection
+            db.close()
 
+            #
             # APPROACH 1
             # orders = []
             #     for order_hash in orders_db_result
@@ -131,9 +132,35 @@ class Property
             #       orders.push(new_pizza_order_object)
 
             # APPROACH 2
-          #   properties = property_db_result.map{|property_hash| Property.new(property_hash)}
-          #   return properties
-          # end
+            properties = property_db_result.map{|property_hash| Property.new(property_hash)}
+            return properties
+          end
+
+          def Property.find_by_address(address)
+            # get db object
+            db = PG.connect({dbname: 'property_tracker', host: 'localhost'})
+            # Write SQL statement
+            sql = "SELECT * FROM property_tracker WHERE address = $1"
+            value = [address]
+            # prepare + execute SQL
+            db.prepare("find", sql)
+
+            # this is like an array of hashes
+            property_db_result = db.exec_prepared("find", value)
+            # close DB connection
+            db.close()
+
+            #
+            # APPROACH 1
+            # orders = []
+            #     for order_hash in orders_db_result
+            #       new_pizza_order_object = PizzaOrder.new(order_hash)
+            #       orders.push(new_pizza_order_object)
+
+            # APPROACH 2
+            properties = property_db_result.map{|property_hash| Property.new(property_hash)}
+            return properties
+          end
 
 
           def Property.delete_all()
@@ -151,4 +178,4 @@ class Property
           end
 
 
-        end 
+        end

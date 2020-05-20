@@ -27,7 +27,9 @@ property1 = Property.new({
     binding.pry
     property1.save()
 
-p   Property.find_by_id(4)
+p   Property.find_by_id(1)
+
+p Property.find_by_address('2 Lockkeepers Cottages')
 
     binding.pry
     nil
